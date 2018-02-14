@@ -323,7 +323,7 @@ class DeletePost(BlogHandler):
                     self.render('post-delete.html', post = post)
                 else:
                     msg = "You cannot delete other people's posts."
-                    self.render('permalink.html', post = post, main_msg = msg)
+                    self.render('permalink.html', post = post, error = msg)
         else:
             self.redirect('/login')
 
@@ -343,7 +343,7 @@ class DeletePost(BlogHandler):
                     self.redirect('/blog')
                 else:
                     msg = "You cannot delete other people's posts."
-                    self.render('permalink.html', post = post, main_msg = msg)
+                    self.render('permalink.html', post = post, error = msg)
         else:
             self.redirect('/login')
 
@@ -361,7 +361,7 @@ class EditPost(BlogHandler):
                     self.render('post-new.html', subject = subject, content = content)
                 else:
                     msg = "You cannot edit other people's posts."
-                    self.render('permalink.html', post = post, main_msg = msg)
+                    self.render('permalink.html', post = post, error = msg)
         else:
             self.redirect('/login')
 
@@ -383,7 +383,7 @@ class EditPost(BlogHandler):
                         self.render("post-new.html", subject = subject, content = content, error = error)
                 else:
                     msg = "You cannot edit other people's posts."
-                    self.render('permalink.html', post = post, main_msg = msg)
+                    self.render('permalink.html', post = post, error = msg)
         else:
             self.redirect('/login')
 
@@ -401,20 +401,20 @@ class LikeHandler(BlogHandler):
 
             if user_id == post.created_id:
                 msg = "You cannot like your own post!"
-                self.render('permalink.html', post = post, main_msg = msg)
+                self.render('permalink.html', post = post, error = msg)
             else:
                 like = get_like(post_id, user_id)
                 if like:
                     db.delete(like)
                     post.count_of_likes -= 1
                     msg = "You unliked this post."
-                    self.render('permalink.html', post = post, main_msg = msg)
+                    self.render('permalink.html', post = post, error = msg)
                 else:
                     new_like = Like(parent = like_key(), post_id = int(post_id), like_id = user_id)
                     new_like.put()
                     post.count_of_likes += 1
                     msg = "You liked this point."
-                    self.render('permalink.html', post = post, main_msg = msg)
+                    self.render('permalink.html', post = post, error = msg)
 
                 post.put()
         else:
@@ -485,7 +485,7 @@ class DeleteComment(BlogHandler):
                     self.render('comment-delete.html', comment=comment)
                 else:
                     msg = "You cannot delete other people's comments!"
-                    self.render('permalink.html', post=post, main_msg=msg)
+                    self.render('permalink.html', post=post, error=msg)
         else:
             self.redirect('/login')
 
@@ -508,7 +508,7 @@ class EditComment(BlogHandler):
                     self.render('comment-new.html', comment = content, post = post)
                 else:
                     msg = "You cannot edit other people's comments."
-                    self.render('permalink.html', main_msg = msg)
+                    self.render('permalink.html', error = msg)
 
         else:
             self.redirect('/login')
@@ -531,7 +531,7 @@ class EditComment(BlogHandler):
                         self.render("comment-new.html", comment = new_content, error = error)
                 else:
                     msg = "You cannot edit other people's comments."
-                    self.render('permalink.html', main_msg = msg)
+                    self.render('permalink.html', error = msg)
 
         else:
             self.redirect('/login')
