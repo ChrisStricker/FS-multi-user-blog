@@ -1,0 +1,11 @@
+<div>
+	<br>
+	<span>{{c.created.strftime("%b %d, %Y")}}</span>
+	<span>by <b>{{c.commenter_name}}</b></span>
+	<p>{{c._render_text | safe}}</p>
+	<div class="btn-group btn-group-sm">
+		<a class="btn btn-secondary" href={{ "/blog/" ~ c.key().id() ~ "/editcomment" }}>Edit</a>
+		<a class="btn btn-secondary" href={{ "/blog/" ~ c.key().id() ~ "/deletecomment"  }}>Delete</a>
+	</div>
+	<hr>
+</div>

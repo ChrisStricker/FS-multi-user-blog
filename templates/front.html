@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{{error}}
+
+	{% if posts %}
+		{% for p in posts %}
+			{{p.render() | safe}}
+		{% endfor %}
+	{% else %}
+		<div style="text-align:center">
+			<h2 class="text-center">No Posts Yet</h2>
+			<a href="/blog/newpost">Be the first!</a>
+		</div>
+	{% endif %}
+{% endblock %}

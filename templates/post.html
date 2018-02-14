@@ -1,0 +1,26 @@
+<div class="container {{p.author_id}}">
+	<div class="jumbotron">
+		<a href={{ "/blog/" ~ p.key().id() }}><h2 class="subject">{{p.subject}}</h2></a>
+		<span>{{p.created.strftime("%b %d, %Y")}}</span>
+		<span>by <b>{{p.created_name}}</b></span>
+		<hr>
+		<p>{{p._render_text | safe}}</p>
+		<div class="btn-group btn-group-sm">
+			<a class="btn btn-secondary" href={{ "/blog/" ~ p.key().id() ~ "/addcomment" }}>Comment</a>
+			<a class="btn btn-secondary" href={{ "/blog/" ~ p.key().id() ~ "/edit" }}>Edit</a>
+			<a class="btn btn-secondary" href={{ "/blog/" ~ p.key().id() ~ "/delete"  }}>Delete</a>
+			
+			<form method="post" action={{ "/blog/" ~ p.key().id() ~ "/like"  }}>
+				<button type="submit" class="btn btn-success">
+		        	Like <span class="badge badge-light">{{p.count_of_likes}}</span>
+		        </button>
+			</form>
+		</div>
+
+		{% for c in comments %}
+			{{c.render() | safe}}
+		{% endfor %}
+	</div>
+</div>
+<br><br>
+ 

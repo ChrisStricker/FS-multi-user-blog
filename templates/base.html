@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FSND Blog</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<header class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="/blog" >My Fullstack Blog</a>
+		<div>
+			<a class="nav-link justify-content-center" href="/blog/newpost">New</a>
+		</div>
+		<div class="input-group justify-content-end">
+		{% if user %}
+			<span class="navbar-text">Hello {{user.name}}!</span><a class="nav-link" href="/logout">(logout)</a>
+		{% else %}
+			<a class="nav-link" href="/login">login</a><span class="navbar-text">or</span><a class="nav-link" href="/signup">signup</a>
+		{% endif %}
+		</div>	
+	</header>
+	
+	<div class="container">
+		<p class="error" id="error-msg">{{main_msg}}</p>
+	{% block content %}
+	{% endblock %}
+	</div>
+</body>
+</html>
+
